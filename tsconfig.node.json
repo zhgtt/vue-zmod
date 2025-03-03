@@ -1,3 +1,4 @@
+// node 环境的 ts 配置
 {
   "compilerOptions": {
     "composite": true,

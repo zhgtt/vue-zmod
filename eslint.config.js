@@ -30,7 +30,7 @@ export default antfu(
       /**
        * @description: 指定一行代码的最大长度
        * @key code - 表示一行代码的长度，默认为 80，超过这个长度，会报错，可以自行调整
-       * @key ignoreComments - 表示是否忽略注释，默认为 false，表示不忽略
+       * @key ignoreComments - 表示是否忽略注释，默认为 false
        *
        * 🆎 更多参数查看文档 https://eslint.org/docs/latest/rules/max-len
        *
@@ -60,19 +60,4 @@ export default antfu(
       'vue/valid-template-root': 'warn', // 是否允许模板内容为空，默认是 error
     },
   },
-
-  // {
-  //   files: ['src/**/*.css'],
-  //   languageOptions: { parser: format.parserPlain },
-  //   plugins: { format },
-  //   rules: {
-  //     'style/indent': 'off',
-  //     'format/prettier': ['error', {
-  //       parser: 'css', // also tried "scss"
-  //       tabWidth: 1,
-  //       // useTabs: true,
-  //       // vueIndentScriptAndStyle: true, // <-- this doesn't apply
-  //     }],
-  //   },
-  // },
 )

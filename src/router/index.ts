@@ -8,7 +8,6 @@ import type { Router, RouteRecordRaw, RouterHistory, RouterOptions } from 'vue-r
 import { handleHotUpdate } from 'vue-router/auto-routes'
 
 import { createRouterGuard } from './guard' // 路由监控相关
-
 import { createVueRoutes } from './routes'
 
 // 🆎 添加全局的重定向路由，建议在运行的时候添加重定向，这样不会 typed-router.d.ts 自动生成

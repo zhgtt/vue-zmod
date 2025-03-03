@@ -10,7 +10,7 @@ import type { IIconBase } from '@icon-park/vue-next/es/runtime'
 import { IconPark } from '@icon-park/vue-next/es/all'
 
 /**
- * @description: 重新定义 IconPark 的属性类型
+ * @description: 重新定义 IconPark 的属性类型 👇
  * @key theme - 图标主题，支持 'outline' | 'filled' | 'two-tone' | 'multi-color'；默认为 outlined
  * @key fill - 图标颜色，多色的图标就传 数组
  * @key size - 图标大小，默认为 1em（16px），🆎 这里会被 class 或者 style 定义的样式所覆盖

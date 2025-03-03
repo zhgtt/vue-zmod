@@ -8,9 +8,10 @@ import process from 'node:process'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import UnoCss from 'unocss/vite'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
 /**
- * 以下是和 按需自动引入 相关的插件
+ * 以下是和 按需自动引入 相关的插件 👇
  * @plugin unplugin-auto-import - 插件会自动引入 常用 API，如 vue、vue-router、pinia 等，无需手动引入；
  * @plugin unplugin-vue-router - 插件会自动根据 src/views 下的 vue 文件，生成对应的路由，无需手动写入
  * @plugin unplugin-vue-components - 插件会自动引入 src/components 下的所有组件（组件中需要定义 name），及第三方 UI 组件外
@@ -22,10 +23,8 @@ import AutoComponents from 'unplugin-vue-components/vite'
 // TODO 引入所支持的 UI 组件库的解析器
 // import {  } from 'unplugin-vue-components/resolvers'
 
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-
 /**
- * @description: 封装 vite 插件的引入和注册
+ * @description: 封装 vite 插件的引入和注册 👇
  * @param viteEnv - vite 环境变量
  * @param isBuild - 是否为打包状态，默认为 false（目前还用不到）
  */
@@ -71,7 +70,7 @@ export function setupVitePlugins(viteEnv: Env.ImportMeta) {
     /**
      * @description: 自动引入常用 API
      * @key dts - 指定插件自动生成的 d.ts 类型文件路径
-     * @key imports - 指定哪些依赖包可以自动引入，是个数组，🆎 该插件并不是所有依赖和 API 都能支持，它支持的依赖查看 https://github.com/unplugin/unplugin-auto-import/tree/main/src/presets
+     * @key imports - 指定哪些依赖包可以自动引入，是个数组，🆎 该插件并不是所有依赖和 API 都能默认支持，它支持的依赖查看 https://github.com/unplugin/unplugin-auto-import/tree/main/src/presets
      * @key dirs - 指定哪些目录下的文件可以自动引入，是个数组，一般是项目中自己封装的 hooks、utils、composables 等
      */
     AutoImport({
@@ -80,15 +79,16 @@ export function setupVitePlugins(viteEnv: Env.ImportMeta) {
         'vue',
         VueRouterAutoImports,
         'pinia',
-        // 自定义指定哪些第三方依赖包，如 vueuse、alova 等，🆎 建议这里只引入一些常用的 API
+        // 自定义指定哪些第三方依赖包，如 vueuse、alova 等，🆎 建议这里只引入一些常用的 API 👇
         {
           'alova/client': ['useRequest'],
         },
-        {
-          from: 'vue-router',
-          imports: ['RouteLocationRaw'],
-          type: true,
-        },
+        // 按需引入插件的 type 类型 API 👇
+        // {
+        //   from: 'vue-router',
+        //   imports: ['RouteLocationRaw'],
+        //   type: true,
+        // },
       ],
       dirs: [],
     }),

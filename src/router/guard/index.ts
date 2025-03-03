@@ -1,5 +1,5 @@
 /**
- * @description: 对路由进行 全局监控、拦截，包含 进度条、title、路由处理 等
+ * 路由守卫、监控、拦截 相关逻辑
  */
 import type { Router } from 'vue-router'
 import { createAccessRouteGuard } from './access'

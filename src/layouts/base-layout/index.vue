@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * @description: 基础布局
+ * 基础布局容器
  */
 import { GlobalContent, GlobalFooter, GlobalHeader, GlobalMenu, GlobalSidebar } from '../modules'
 
