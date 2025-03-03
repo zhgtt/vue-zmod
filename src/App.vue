@@ -5,8 +5,9 @@ defineOptions({
 </script>
 
 <template>
-  <!--   路由页面    -->
-  <RouterView />
+  <div class="h-full w-full">
+    <RouterView />
+  </div>
 </template>
 
 <style scoped></style>

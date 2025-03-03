@@ -29,7 +29,7 @@
 │   │   ├──📄assets.ts              # 引入第三方插件的静态资源
 │   ├──📁router                 # 路由
 │   ├──📁store                  # 状态管理
-│   ├──📁typings                # 声明 ts 类型的文件
+│   ├──📁types                # 声明 ts 类型的文件
 │   ├──📁styles                 # 全局 css 文件
 │   ├──📁utils                  # 项目公共方法、工具
 │   ├──📁views                  # 页面文件
@@ -56,7 +56,7 @@
 
 > 📢 **说明**
 
-1. 基本的目录文件已形成，每个文件都有自己的作用和分工，如 `src/plugins`、`src/hooks`、`src/typings` 等等；
+1. 基本的目录文件已形成，每个文件都有自己的作用和分工，如 `src/plugins`、`src/hooks`、`src/types` 等等；
 2. 每个文件都有对应的注释，方便理解；
 3. 对核心文件 `vite.config.ts` 和 `main.ts` 进行了封装以及详细的注释；
 
@@ -85,7 +85,7 @@ git commit '提交信息示例' --no-verify
 
 ### 😑 Typescript 支持
 
-全局的类型说明都定义在 `src/typings` 目录下，比如 env、router 的类型等；
+全局的类型说明都定义在 `src/types` 目录下，比如 env、router 的类型等；
 
 ### 🙄 常用插件
 
@@ -93,14 +93,14 @@ git commit '提交信息示例' --no-verify
 
 ### 😴 接口请求
 
-[TODO] 对接口请求进行了简单封装，由 [alovajs](https://alova.js.org/zh-CN/) 支持，采用 hooks 的形式进行接口请求；
+对接口请求进行了简单封装，由 [alovajs](https://alova.js.org/zh-CN/) 支持，采用 hooks 的形式进行接口请求；
 
 ### 😵 路由管理
 
 支持根据文件自动引入路由，无需手动再定义路由文件，还可以自定义拓展路由属性（**由每个路由页面单独管理**），由 [unplugin-vue-router](https://github.com/posva/unplugin-vue-router) 插件支持；
 
 ### 🥴 菜单管理 & 封装
-1. [TODO] 简单封装了 路由转菜单、远程菜单匹配路由、路由和标签、路由鉴权 的逻辑，**可在 env 中选择关闭**；
+1. 简单封装了 路由转菜单、远程菜单匹配路由、路由和标签、路由鉴权 的逻辑，**可在 env 中选择关闭**；
 2. 只需要关注菜单相关的逻辑以及每个路由页面的配置项即可，无需关注路由的生成；
 
 ### 😶 组件开发
@@ -111,7 +111,7 @@ git commit '提交信息示例' --no-verify
 
 ### 😣 主题切换
 
-[TODO] 利用 [UnoCSS](https://unocss.dev/) + SCSS 简单实现了实现主题切换的逻辑；
+利用 [UnoCSS](https://unocss.dev/) + SCSS 简单实现了实现主题切换的逻辑；
 
 ---
 

@@ -15,7 +15,7 @@ import { IconPark } from '@icon-park/vue-next/es/all'
  * @key fill - 图标颜色，多色的图标就传 数组
  * @key size - 图标大小，默认为 1em（16px），🆎 这里会被 class 或者 style 定义的样式所覆盖
  *
- * @类型解释: Pick<> - 提取某些属性，组成新的类型
+ * NOTE @类型解释: Pick<> - 提取某些属性，组成新的类型
  */
 type NewIIconBase = Pick<IIconBase, 'theme' | 'fill' | 'size'>
 

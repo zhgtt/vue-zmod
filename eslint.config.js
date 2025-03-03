@@ -24,7 +24,8 @@ export default antfu(
   // 设置全局的规则
   {
     rules: {
-      // 'style/semi': ['error', 'always'], // 强制末尾加分号（可以自行打开，默认是没有分号的）
+      // 强制末尾加分号（可以自行打开，默认是没有分号的）
+      // 'style/semi': ['error', 'always'],
 
       /**
        * @description: 指定一行代码的最大长度
@@ -42,7 +43,13 @@ export default antfu(
        *
        * 🆎 更多参数查看文档 https://perfectionist.dev/rules/sort-imports
        */
-      'perfectionist/sort-imports': ['off'],
+      'perfectionist/sort-imports': ['off', {}],
+
+      // 单行 if 语句是否需要换行；默认是 error，强制换行
+      // 'antfu/if-newline': 'off',
+
+      // 是否删除不使用的 import；默认是 error（强制删除）
+      'unused-imports/no-unused-imports': 'off',
     },
   },
 

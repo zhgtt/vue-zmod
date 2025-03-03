@@ -1,4 +1,5 @@
-// 主应用页面
+// 主应用页面 👇
+import type { App as VueApp } from 'vue'
 import App from './App.vue'
 
 // 引入第三方插件的注册方法、静态资源
@@ -13,23 +14,42 @@ import { setupStore } from './store'
 import './styles/global.css' // 全局 css
 
 /**
- * 注册 & 挂载全局 app 节点
+ * @description: 应用初始化配置
  */
-async function setupApp() {
-  // 挂载自定义、第三方插件，🆎 要放在创建 app 的前面
+async function setupPlugins(app: VueApp) {
+  // 初始化进度条
   setupNProgress()
 
-  // 挂载全局 app 节点
-  const app = createApp(App)
-
-  // 挂载全局状态管理
+  // 初始化状态管理
   setupStore(app)
 
-  // 挂载路由
+  // 初始化路由
   await setupRouter(app)
-
-  // 挂载 DOM 节点
-  app.mount('#app')
 }
 
-await setupApp()
+/**
+ * @description: 启动应用
+ */
+async function bootstrap() {
+  try {
+    // 挂载全局 app 节点
+    const app = createApp(App)
+
+    // 初始化插件
+    await setupPlugins(app)
+
+    // 挂载应用
+    app.mount('#app')
+
+    // TODO 给下面这行 log 加样式
+    console.log('😄😄😄 应用启动成功 😄😄😄')
+  }
+  catch (error) {
+    console.error('应用启动失败:', error)
+  }
+}
+
+// 启动
+bootstrap().catch((error) => {
+  console.error('Vue 应用启动过程出错:', error)
+})

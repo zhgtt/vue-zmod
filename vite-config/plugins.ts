@@ -1,6 +1,8 @@
 /**
  * vite 相关的所有插件都在这里定义 & 注册
  */
+import type { PluginOption } from 'vite'
+
 import path from 'node:path'
 import process from 'node:process'
 import vue from '@vitejs/plugin-vue'
@@ -14,12 +16,13 @@ import UnoCss from 'unocss/vite'
  * @plugin unplugin-vue-components - 插件会自动引入 src/components 下的所有组件（组件中需要定义 name），及第三方 UI 组件外
  */
 import AutoImport from 'unplugin-auto-import/vite'
-import { VueRouterAutoImports } from 'unplugin-vue-router'
 import AutoVueRouter from 'unplugin-vue-router/vite'
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-import type { PluginOption } from 'vite' // 🆎 如果使用了 unplugin-vue-components 插件，注册时要用 VueRouterAutoImports 替换 vue-router
+import { VueRouterAutoImports } from 'unplugin-vue-router' // 🆎 因为使用了 unplugin-vue-components 插件，所以注册时要用 VueRouterAutoImports 替换 vue-router
 import AutoComponents from 'unplugin-vue-components/vite'
-// import {  } from 'unplugin-vue-components/resolvers' // 🆎 引入所支持的 UI 组件库的解析器
+// TODO 引入所支持的 UI 组件库的解析器
+// import {  } from 'unplugin-vue-components/resolvers'
+
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
 /**
  * @description: 封装 vite 插件的引入和注册
@@ -35,18 +38,24 @@ export function setupVitePlugins(viteEnv: Env.ImportMeta) {
   const vitePlugins: (PluginOption | PluginOption[])[] = [
     /**
      * @description: 根据文件自动注入路由
-     * @key routesFolder - 指定路由页面存放的目录，默认为 src/views，🆎 也就是这个目录下所有的 .vue 文件都会被自动注册为路由
+     * @key routesFolder - 指定路由页面存放的目录, 可以是一个数组, 默认为 src/views，🆎 也就是这个目录下所有的 .vue 文件都会被自动注册为路由
      * @key exclude - 指定哪些目录下的文件不需要自动注册为路由
      * @key dts - 指定插件自动生成的路由 d.ts 类型文件路径
+     * @key extensions - 哪些文件可以被视为路由页面, 默认为 .vue
      * @key extendRoute - 扩展路由，可以给路由添加公共的属性，如 alias（路由别名）、meta（路由配置项）、fullPath（完整路径） 等
      *
-     * 🆎 vue 的注入必须在 AutoVueRouter 之后
+     * ALERT vue 的注入必须在 AutoVueRouter 之后
      */
     AutoVueRouter({
-      routesFolder: 'src/views',
+      routesFolder: [
+        {
+          src: 'src/views',
+        },
+      ],
       exclude: ['src/views/**/components'],
-      dts: 'src/typings/auto-typed-router.d.ts', // 这个文件会自动生成
-      extendRoute(route) {
+      dts: 'src/types/auto-typed-router.d.ts', // 这个文件会自动生成
+      extensions: ['.vue'],
+      async extendRoute(route) {
         const { component, fullPath } = route
         if (component) {
           // 给含有组件的路由，添加 meta 属性
@@ -56,7 +65,7 @@ export function setupVitePlugins(viteEnv: Env.ImportMeta) {
     }),
 
     vue(),
-    vueJsx(), // 支持 jsx 书写组件；🆎 需要在 tsconfig.app.json 中配置 jsxImportSource 属性，然后再重启编辑器，防止编写时出现类型错误
+    vueJsx(), // 支持 jsx 书写组件; NOTE 需要在 tsconfig.app.json 中配置 jsxImportSource 属性，然后再重启编辑器，防止编写时出现类型错误
     UnoCss(),
 
     /**
@@ -66,7 +75,7 @@ export function setupVitePlugins(viteEnv: Env.ImportMeta) {
      * @key dirs - 指定哪些目录下的文件可以自动引入，是个数组，一般是项目中自己封装的 hooks、utils、composables 等
      */
     AutoImport({
-      dts: 'src/typings/auto-import.d.ts', // 这个文件会自动生成
+      dts: 'src/types/auto-import.d.ts', // 这个文件会自动生成
       imports: [
         'vue',
         VueRouterAutoImports,
@@ -90,7 +99,7 @@ export function setupVitePlugins(viteEnv: Env.ImportMeta) {
      * @key resolvers - 解析器，用来解析所支持的 UI 组件库，🆎 需自行添加
      */
     AutoComponents({
-      dts: 'src/typings/auto-components.d.ts', // 这个文件会自动生成
+      dts: 'src/types/auto-components.d.ts', // 这个文件会自动生成
       resolvers: [],
     }),
 

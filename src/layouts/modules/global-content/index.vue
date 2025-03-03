@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * @description: 全局内容展示
+ * 主体内容展示区域
  */
 defineOptions({
   name: 'GlobalContent',
@@ -8,15 +8,13 @@ defineOptions({
 </script>
 
 <template>
-  <RouterView v-slot="{ Component }">
-    <Transition>
-      <!--      <KeepAlive> -->
-      <component :is="Component" />
-      <!--      </KeepAlive> -->
-    </Transition>
+  <RouterView v-slot="{ Component, route }">
+    <!--    <Transition> -->
+    <!--      <KeepAlive> -->
+    <component :is="Component" />
+    <!--      </KeepAlive> -->
+    <!--    </Transition> -->
   </RouterView>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
