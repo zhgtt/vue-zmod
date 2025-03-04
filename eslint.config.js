@@ -11,7 +11,7 @@ export default antfu(
     unocss: true,
 
     // 指定哪些文件不需要 eslint 检查
-    ignores: ['public', 'dist*', '*.md'],
+    ignores: ['public', 'dist*', '*.md', 'package.json'],
 
     // 开启对 html、css、markdown 的格式化，需要安装 eslint-plugin-format 插件
     formatters: {

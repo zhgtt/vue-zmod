@@ -21,6 +21,6 @@ declare module 'vue-router' {
     blank?: boolean
 
     // 对应菜单的配置
-    menuProps?: Menu.MenuConfigInRoute
+    menuProps?: APP.Menu.ItemConfig
   }
 }

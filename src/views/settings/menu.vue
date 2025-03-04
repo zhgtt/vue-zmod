@@ -13,7 +13,6 @@ definePage({
   meta: {
     title: '菜单设置',
     menuProps: {
-      icon: '',
     },
   },
 })

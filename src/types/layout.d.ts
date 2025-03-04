@@ -2,7 +2,7 @@
  * 布局相关的类型定义
  */
 
-declare namespace APP.Global {
+declare namespace APP.Layout {
   // 布局类型
   type LayoutTypes = 'base' | 'blank'
 

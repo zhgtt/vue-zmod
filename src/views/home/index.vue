@@ -13,7 +13,7 @@ definePage({
   meta: {
     title: '首页',
     menuProps: {
-      icon: 'ccc',
+      icon: { name: 'Home' },
       order: 1,
     },
   },

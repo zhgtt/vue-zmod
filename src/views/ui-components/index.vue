@@ -14,7 +14,7 @@ definePage({
   meta: {
     title: 'UI 组件',
     menuProps: {
-      icon: 'eee',
+      icon: '333',
       isChildMenu: false,
       order: 2,
     },

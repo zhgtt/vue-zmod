@@ -20,7 +20,7 @@ import { IconPark } from '@icon-park/vue-next/es/all'
 type NewIIconBase = Pick<IIconBase, 'theme' | 'fill' | 'size'>
 
 // 定义组件属性类型
-interface Props {
+export interface Props {
   type?: 'local' | 'iconify' | 'icon-park' // 图标类型，默认为 local
   name: string // 图标名称
   iconOption?: NewIIconBase // icon-park 配置项

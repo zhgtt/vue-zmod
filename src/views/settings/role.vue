@@ -13,7 +13,6 @@ definePage({
   meta: {
     title: '角色设置',
     menuProps: {
-      icon: '',
     },
   },
 })

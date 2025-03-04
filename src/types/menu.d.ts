@@ -19,8 +19,8 @@ declare namespace APP.Menu {
 
   // 在路由页面中定义的菜单配置项类型
   interface ItemConfig {
-    // 对应菜单的图标
-    icon?: string
+    // 对应菜单的图标，采用 SvgIcon 组件的类型；如果是一个 string，默认取 local 的图标
+    icon?: string | import('@/components/custom/SvgIcon.vue').Props
 
     // 对应菜单的排序，必须大于 0，不设置的话默认为 最大值
     order?: number

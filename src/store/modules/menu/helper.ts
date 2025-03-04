@@ -10,15 +10,29 @@ import { builtinRoutePaths } from '@/constants/routes'
 import { customMenuItems } from '@/constants/menus'
 
 /**
- * @description: 创建基础菜单数据
+ * @description: 🆎 创建基础菜单数据
  */
 function createBaseMenuItem(route: RouteRecordRaw): APP.Menu.MenuItem {
   const { name, meta } = route
+
+  // 获取菜单属性
+  const menuProps = meta?.menuProps || {}
+
+  // 🆎 isChildMenu 默认为 true，也就是所有的目录默认都为 菜单项
+  let { isChildMenu = true, icon, customLabel, ...restMenuProps } = menuProps
+
+  // 处理 icon 属性，确保它符合 SvgIcon 组件的 Props 类型
+  if (icon && typeof icon === 'string') {
+    // 如果 icon 是字符串，则取 local 的图标
+    icon = { type: 'local', name: icon }
+  }
+
   return {
     key: name as string,
-    label: meta?.title || name as string,
-    routePath: meta?.fullPath,
-    ...(meta?.menuProps || {}),
+    label: customLabel || meta?.title || name as string,
+    ...(isChildMenu && { routePath: meta?.fullPath }), // 🆎 所在目录为 菜单项，才有 routePath 属性
+    ...restMenuProps,
+    ...(icon && { icon }),
   }
 }
 
@@ -116,7 +130,7 @@ function convertRouteToMenuItem(route: RouteRecordRaw) {
 /**
  * @description: 🆎 拆分：处理文件夹目录类型的路由，简言之，就是处理 文件夹目录下 index.vue 文件；
  */
-function handleDirRoute(route: RouteRecordRaw) {
+function handleDirRoute(route: RouteRecordRaw): APP.Menu.MenuItem | null {
   const { path, children } = route
 
   // 获取目录下 index.vue 文件
@@ -128,7 +142,7 @@ function handleDirRoute(route: RouteRecordRaw) {
 
   // 🆎 index.vue 的作用不管是路由文件，还是配置文件，在生成菜单数据时，都应获取它定义的 meta 数据
   const { meta: indexRouteMeta } = indexRoute
-  const { isChildMenu = true, hideInMenu = false, customLabel, ...indexMenuRest } = indexRouteMeta?.menuProps || {}
+  const { isChildMenu = true, hideInMenu = false } = indexRouteMeta?.menuProps || {}
 
   // 如果设置了隐藏，直接返回 null
   if (hideInMenu)
@@ -147,28 +161,12 @@ function handleDirRoute(route: RouteRecordRaw) {
     children.shift()
   }
 
+  const indexMenuItem = createBaseMenuItem(indexRoute)
+
   return {
-    key: indexRoute.name as string,
-    label: customLabel || indexRouteMeta?.title,
-    ...(isChildMenu && { routePath: indexRouteMeta?.fullPath }), // 🆎 所在目录为 子菜单项，才有 routePath 属性
+    ...indexMenuItem,
     ...(!isChildMenu && { children: processRoutesToMenus(children || []) }), // 🆎 所在目录为 折叠菜单（父级菜单），才有 children 属性
-    ...indexMenuRest,
   }
-}
-
-/**
- * @description: 🆎 拆分：菜单排序 👇
- */
-function sortMenuItems(items: APP.Menu.MenuItem[]): APP.Menu.MenuItem[] {
-  // 🆎 确保所有菜单项都有 order 值，未设置的默认为最大值
-  const itemsWithOrder = items.map(item => ({
-    ...item,
-    order: item.order ?? Number.MAX_SAFE_INTEGER,
-  }))
-
-  // NOTE 使用 es-toolkit 库的 orderBy 方法进行排序；🆎 asc 升序，desc - 降序
-  // 🆎 多字段排序：优先按 order 排序，相同 order 的按 label 排序
-  return orderBy(itemsWithOrder, ['order', 'label'], ['asc', 'asc'])
 }
 
 /**
@@ -213,6 +211,21 @@ function mergeCustomMenus(menus: APP.Menu.MenuItem[]) {
   customMenuItems.forEach(item => addMenuItem(result, item))
 
   return sortMenuItems(result)
+}
+
+/**
+ * @description: 🆎 拆分：菜单排序 👇
+ */
+function sortMenuItems(items: APP.Menu.MenuItem[]): APP.Menu.MenuItem[] {
+  // 🆎 确保所有菜单项都有 order 值，未设置的默认为最大值
+  const itemsWithOrder = items.map(item => ({
+    ...item,
+    order: item.order ?? Number.MAX_SAFE_INTEGER,
+  }))
+
+  // NOTE 使用 es-toolkit 库的 orderBy 方法进行排序；🆎 asc 升序，desc - 降序
+  // 🆎 多字段排序：优先按 order 排序，相同 order 的按 label 排序
+  return orderBy(itemsWithOrder, ['order', 'label'], ['asc', 'asc'])
 }
 
 /**
